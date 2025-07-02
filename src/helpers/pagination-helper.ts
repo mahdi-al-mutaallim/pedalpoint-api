@@ -29,6 +29,7 @@ const calculate_pagination = (options: TOptions): TOptionsResult => {
 	const hasValidOrder = isValidOrder(rawOrder);
 
 	const sort =
+		// biome-ignore lint/style/noNonNullAssertion: <it won't be undefined i promise>
 		hasValidSort && hasValidOrder ? options.sort!.trim() : "createdAt";
 	const order =
 		hasValidSort && hasValidOrder ? (rawOrder as "asc" | "desc") : "desc";
