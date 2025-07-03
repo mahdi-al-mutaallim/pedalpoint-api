@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Customer {
+  customerId String   @id @default(uuid())
+  name       String   @db.VarChar(100)
+  email      String   @unique
+  phone      String   @db.VarChar(15)
+  createdAt  DateTime @default(now())
+  bikes      Bike[]
+
+  @@map("customers")
+}
+
+model Bike {
+  bikeId         String          @id @default(uuid())
+  model          String          @db.VarChar(100)
+  brand          String          @db.VarChar(100)
+  year           Int
+  customerId     String?
+  customer       Customer?       @relation(fields: [customerId], references: [customerId])
+  serviceRecords ServiceRecord[]
+
+  @@map("bikes")
+}
+
+enum ServiceStatus {
+  PENDING
+  IN_PROGRESS
+  DONE
+}
+
+model ServiceRecord {
+  serviceId      String        @id @default(uuid())
+  bikeId         String
+  bike           Bike          @relation(fields: [bikeId], references: [bikeId])
+  serviceDate    DateTime      @default(now())
+  description    String        @db.VarChar(255)
+  completionDate DateTime?     @db.Date
+  status         ServiceStatus @default(PENDING)
+}

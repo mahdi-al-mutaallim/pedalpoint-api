@@ -1,37 +1,46 @@
 {
-	"name": "prisma-assignment",
-	"module": "index.ts",
-	"type": "module",
-	"private": true,
-	"scripts": {
-		"dev": "bun --watch src/index.ts",
-		"prod": "",
-		"build": "tsc && tsc-alias",
-		"start": "node build/index.js",
-		"format": "bunx biome format --write",
-		"lint": "bunx biome lint --write",
-		"check": "bunx biome check --write"
-	},
-	"dependencies": {
-		"@prisma/client": "^6.11.0",
-		"bcrypt": "^6.0.0",
-		"cookie-parser": "^1.4.7",
-		"cors": "^2.8.5",
-		"express": "^5.1.0",
-		"jsonwebtoken": "^9.0.2",
-		"zod": "^3.25.67"
-	},
-	"devDependencies": {
-		"@biomejs/biome": "2.0.6",
-		"@types/bcrypt": "^5.0.2",
-		"@types/cookie-parser": "^1.4.9",
-		"@types/cors": "^2.8.19",
-		"@types/express": "^5.0.3",
-		"@types/jsonwebtoken": "^9.0.10",
-		"@types/node": "^24.0.10",
-		"prisma": "^6.11.0",
-		"tsc-alias": "^1.8.16",
-		"tsconfig-paths": "^4.2.0",
-		"typescript": "^5.8.3"
-	}
+  "name": "prisma-assignment",
+  "module": "src/index.ts",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "bun --watch src/index.ts",
+    "prod": "NODE_ENV=production node build/index.js",
+    "build": "tsc && tsc-alias",
+    "start": "node build/index.js",
+    "format": "bunx biome format --write",
+    "lint": "bunx biome lint --write",
+    "check": "bunx biome check --write",
+    "db:migrate": "dotenv -e .env.development.local bunx prisma migrate dev",
+    "db:migrate:prod": "dotenv -e .env.production.local bunx prisma migrate dev",
+    "db:generate": "dotenv -e .env.development.local bunx prisma generate",
+    "db:push": "dotenv -e .env.development.local bunx prisma db push",
+    "db:studio": "dotenv -e .env.development.local bunx prisma studio",
+    "db:reset": "dotenv -e .env.development.local bunx prisma migrate reset",
+    "db:format": "dotenv -e .env.development.local bunx prisma format",
+    "db:validate": "dotenv -e .env.development.local bunx prisma validate"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.11.0",
+    "bcrypt": "^6.0.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "zod": "^3.25.67"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.0.6",
+    "@types/bcrypt": "^5.0.2",
+    "@types/cookie-parser": "^1.4.9",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^24.0.10",
+    "dotenv-cli": "^8.0.0",
+    "prisma": "^6.11.0",
+    "tsc-alias": "^1.8.16",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.8.3"
+  }
 }
