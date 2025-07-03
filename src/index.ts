@@ -1,6 +1,6 @@
 import "./paths";
-import global_error_handler from "@app/middlewares/global-error-handler";
-import not_found from "@app/middlewares/not-found";
+import globalErrorHandler from "@app/middlewares/globalErrorHandler";
+import notFound from "@app/middlewares/notFound";
 import router from "@app/routes";
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -19,11 +19,11 @@ app.use(cookieParser());
 app.get("/", (_req: Request, res: Response) => {
   res.status(200).json({ message: "Bike Servicing Management API is running!" });
 });
-app.use("/api/v1", router);
+app.use("/api", router);
 
 // Error Handling Middleware
-app.use(global_error_handler);
-app.use(not_found);
+app.use(globalErrorHandler);
+app.use(notFound);
 
 // Server
 const PORT = parseInt(process.env["PORT"] || "3000", 10);

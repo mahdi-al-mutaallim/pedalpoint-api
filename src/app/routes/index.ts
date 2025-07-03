@@ -1,8 +1,8 @@
-import { Router } from "express";
+import createRouter, { type TRouter } from "@shared/createRouter";
 
-const router = Router();
+const router = createRouter();
 
-type TRoute = { path: string; router: Router };
+type TRoute = { path: string; router: TRouter };
 
 const module_routes: TRoute[] = [];
 
