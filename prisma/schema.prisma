@@ -32,9 +32,9 @@ model Bike {
 }
 
 enum ServiceStatus {
-  PENDING
-  IN_PROGRESS
-  DONE
+  PENDING @map("pending")
+  IN_PROGRESS @map("in_progress")
+  DONE @map("done")
 }
 
 model ServiceRecord {
