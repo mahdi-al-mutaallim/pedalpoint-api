@@ -21,13 +21,13 @@
     "db:validate": "dotenv -e .env.development.local bunx prisma validate"
   },
   "dependencies": {
-    "@prisma/client": "^6.11.0",
+    "@prisma/client": "^6.11.1",
     "bcrypt": "^6.0.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
-    "zod": "^3.25.67"
+    "zod": "^3.25.74"
   },
   "devDependencies": {
     "@biomejs/biome": "2.0.6",
@@ -38,7 +38,7 @@
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^24.0.10",
     "dotenv-cli": "^8.0.0",
-    "prisma": "^6.11.0",
+    "prisma": "^6.11.1",
     "tsc-alias": "^1.8.16",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.8.3"
