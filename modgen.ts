@@ -8,15 +8,39 @@ if (!moduleName) {
   process.exit(1);
 }
 
-// Helper: PascalCase
-const toPascalCase = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
+// Helper functions for naming conventions
+const toPascalCase = (str: string) => {
+  return str
+    .split(/[_\s-]+/) // Split by underscore, space, or hyphen
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join('');
+};
 
-// Plural folder and files
-const pluralModuleName = moduleName.endsWith("s") ? moduleName.toLowerCase() : moduleName.toLowerCase() + "s";
+const toCamelCase = (str: string) => {
+  const pascal = toPascalCase(str);
+  return pascal.charAt(0).toLowerCase() + pascal.slice(1);
+};
+
+const toSnakeCase = (str: string) => {
+  return str
+    .replace(/([A-Z])/g, '_$1') // Add underscore before capital letters
+    .replace(/^_/, '') // Remove leading underscore
+    .toLowerCase()
+    .replace(/[_\s-]+/g, '_'); // Replace multiple separators with single underscore
+};
+
+// Convert input to snake_case for consistency
+const normalizedInput = toSnakeCase(moduleName);
+
+// Determine if input is already plural
+const isPlural = normalizedInput.endsWith('s') && !normalizedInput.endsWith('ss');
+
+// Plural folder and files (snake_case)
+const pluralModuleName = isPlural ? normalizedInput : normalizedInput + 's';
 const ModuleName = toPascalCase(pluralModuleName);
 
-// Prisma model name (singular)
-const prismaModelName = pluralModuleName.endsWith("s") ? pluralModuleName.slice(0, -1) : pluralModuleName;
+// Prisma model name (singular, camelCase)
+const prismaModelName = isPlural ? toCamelCase(normalizedInput.slice(0, -1)) : toCamelCase(normalizedInput);
 
 const baseDir = path.join(__dirname, "src", "app", "modules");
 const modulePath = path.join(baseDir, pluralModuleName);
@@ -30,8 +54,9 @@ try {
   fs.mkdirSync(modulePath, { recursive: true });
 
   // Convert to singular for controller function names
-  const singularName = pluralModuleName.endsWith("s") ? pluralModuleName.slice(0, -1) : pluralModuleName;
-  const SingularName = toPascalCase(singularName);
+  const singularModuleName = isPlural ? normalizedInput.slice(0, -1) : normalizedInput;
+  const singularName = toCamelCase(singularModuleName);
+  const SingularName = toPascalCase(singularModuleName);
 
   const files: Record<string, string> = {
     [`${pluralModuleName}.controllers.ts`]: `import catchAsync from "@shared/catchAsync";
