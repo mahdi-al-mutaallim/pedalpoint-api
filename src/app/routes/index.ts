@@ -5,10 +5,10 @@ const router = createRouter();
 
 type TRoute = { path: string; router: TRouter };
 
-const module_routes: TRoute[] = [
-  { path: "/customers", router: CustomersRoutes }
+const moduleRoutes: TRoute[] = [
+	{ path: "/customers", router: CustomersRoutes },
 ];
 
-module_routes.forEach((route) => router.use(route.path, route.router));
+moduleRoutes.forEach((route) => router.use(route.path, route.router));
 
 export default router;
