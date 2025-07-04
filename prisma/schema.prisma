@@ -32,9 +32,9 @@ model Bike {
 }
 
 enum ServiceStatus {
-  PENDING @map("pending")
-  IN_PROGRESS @map("in_progress")
-  DONE @map("done")
+  pending
+  in_progress
+  done
 }
 
 model ServiceRecord {
@@ -43,8 +43,8 @@ model ServiceRecord {
   bike           Bike          @relation(fields: [bikeId], references: [bikeId])
   serviceDate    DateTime      @default(now())
   description    String        @db.VarChar(255)
-  completionDate DateTime?     @db.Date
-  status         ServiceStatus @default(PENDING)
+  completionDate DateTime?     @db.Date @default(now())
+  status         ServiceStatus @default(pending)
 
   @@map("service_records")
 }
