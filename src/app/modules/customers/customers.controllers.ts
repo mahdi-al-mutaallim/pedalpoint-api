@@ -1,27 +1,124 @@
 import catchAsync from "@shared/catchAsync";
+import httpStatus from "@shared/httpStatus";
+import sendResponse from "@shared/sendResponse";
+import { CustomersServices } from "./customers.services";
 
-const getCustomers = catchAsync(async (req, res) => {
-  console.log(req, res);
+const getCustomers = catchAsync(async (_req, res) => {
+	const result = await CustomersServices.getCustomersFromDB();
+	if (!result || result.length === 0) {
+		return sendResponse(res, {
+			code: httpStatus.OK,
+			success: true,
+			message: "No customers found",
+			data: [],
+		});
+	}
+	sendResponse(res, {
+		code: httpStatus.OK,
+		success: true,
+		message: "Customers fetched successfully",
+		data: result,
+	});
 });
 
 const getCustomerById = catchAsync(async (req, res) => {
-  console.log(req, res);
+	const { id } = req.params;
+	if (!id) {
+		return sendResponse(res, {
+			code: httpStatus.BAD_REQUEST,
+			success: false,
+			message: "Customer ID is required",
+			data: null,
+		});
+	}
+	const result = await CustomersServices.getCustomerByIdFromDB(id);
+	if (!result) {
+		return sendResponse(res, {
+			code: httpStatus.NOT_FOUND,
+			success: false,
+			message: "Customer not found",
+			data: null,
+		});
+	}
+	sendResponse(res, {
+		code: httpStatus.OK,
+		success: true,
+		message: "Customer fetched successfully",
+		data: result,
+	});
 });
 
-const createCustomers = catchAsync(async (req, res) => {
-  console.log(req, res);
+const createCustomer = catchAsync(async (req, res) => {
+	const result = await CustomersServices.createCustomerIntoDB(req.body);
+	if (!result) {
+		return sendResponse(res, {
+			code: httpStatus.INTERNAL_SERVER_ERROR,
+			success: false,
+			message: "Failed to create customer",
+			data: null,
+		});
+	}
+	sendResponse(res, {
+		code: httpStatus.CREATED,
+		success: true,
+		message: "Customer created successfully",
+		data: result,
+	});
 });
-const updateCustomers = catchAsync(async (req, res) => {
-  console.log(req, res);
+
+const updateCustomerById = catchAsync(async (req, res) => {
+	const { id } = req.params;
+	if (!id) {
+		return sendResponse(res, {
+			code: httpStatus.BAD_REQUEST,
+			success: false,
+			message: "Customer ID is required",
+		});
+	}
+	const result = await CustomersServices.updateCustomerByIdIntoDB(id, req.body);
+	if (!result) {
+		return sendResponse(res, {
+			code: httpStatus.NOT_FOUND,
+			success: false,
+			message: "Customer not found",
+		});
+	}
+	sendResponse(res, {
+		code: httpStatus.OK,
+		success: true,
+		message: "Customer updated successfully",
+		data: result,
+	});
 });
-const deleteCustomers = catchAsync(async (req, res) => {
-  console.log(req, res);
+
+const deleteCustomerById = catchAsync(async (req, res) => {
+	const { id } = req.params;
+	if (!id) {
+		return sendResponse(res, {
+			code: httpStatus.BAD_REQUEST,
+			success: false,
+			message: "Customer ID is required",
+		});
+	}
+	const result = await CustomersServices.deleteCustomerByIdFromDB(id);
+	if (!result) {
+		return sendResponse(res, {
+			code: httpStatus.NOT_FOUND,
+			success: false,
+			message: "Customer not found",
+		});
+	}
+	sendResponse(res, {
+		code: httpStatus.OK,
+		success: true,
+		message: "Customer deleted successfully",
+	});
 });
 
 export const CustomersControllers = {
-  getCustomers,
-  getCustomerById,
-  createCustomers,
-  updateCustomers,
-  deleteCustomers,
+	getCustomers,
+	getCustomerById,
+	createCustomer,
+	updateCustomerById,
+	deleteCustomerById,
 };
