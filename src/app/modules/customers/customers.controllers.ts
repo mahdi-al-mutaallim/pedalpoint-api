@@ -3,6 +3,24 @@ import httpStatus from "@shared/httpStatus";
 import sendResponse from "@shared/sendResponse";
 import { CustomersServices } from "./customers.services";
 
+const createCustomer = catchAsync(async (req, res) => {
+	const result = await CustomersServices.createCustomerIntoDB(req.body);
+	if (!result) {
+		return sendResponse(res, {
+			code: httpStatus.INTERNAL_SERVER_ERROR,
+			success: false,
+			message: "Failed to create customer",
+			data: null,
+		});
+	}
+	sendResponse(res, {
+		code: httpStatus.CREATED,
+		success: true,
+		message: "Customer created successfully",
+		data: result,
+	});
+});
+
 const getCustomers = catchAsync(async (_req, res) => {
 	const result = await CustomersServices.getCustomersFromDB();
 	if (!result || result.length === 0) {
@@ -44,24 +62,6 @@ const getCustomerById = catchAsync(async (req, res) => {
 		code: httpStatus.OK,
 		success: true,
 		message: "Customer fetched successfully",
-		data: result,
-	});
-});
-
-const createCustomer = catchAsync(async (req, res) => {
-	const result = await CustomersServices.createCustomerIntoDB(req.body);
-	if (!result) {
-		return sendResponse(res, {
-			code: httpStatus.INTERNAL_SERVER_ERROR,
-			success: false,
-			message: "Failed to create customer",
-			data: null,
-		});
-	}
-	sendResponse(res, {
-		code: httpStatus.CREATED,
-		success: true,
-		message: "Customer created successfully",
 		data: result,
 	});
 });
