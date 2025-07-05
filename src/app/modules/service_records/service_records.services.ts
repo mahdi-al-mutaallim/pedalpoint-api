@@ -41,7 +41,7 @@ const getServiceRecordsStatusFromDB = async () => {
         in: [ServiceStatus.pending, ServiceStatus.in_progress]
       },
       serviceDate: sevenDaysAgo
-    }
+    } 
   })
 };
 
