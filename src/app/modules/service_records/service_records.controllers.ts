@@ -98,9 +98,28 @@ const updateServiceRecordById = catchAsync(async (req, res) => {
 	});
 });
 
+const getServiceRecordsStatus = catchAsync(async (_req, res) => {
+  const result = await ServiceRecordsServices.getServiceRecordsStatusFromDB();
+  if (!result) {
+    return sendResponse(res, {
+      code: httpStatus.INTERNAL_SERVER_ERROR,
+      success: false,
+      message: "Failed to fetch service records status",
+      data: null,
+    });
+  }
+  return sendResponse(res, {
+    code: httpStatus.OK,
+    success: true,
+    message: "Overdue or pending services fetched successfully",
+    data: result,
+  });
+});
+
 export const ServiceRecordsControllers = {
 	createServiceRecord,
 	getServiceRecords,
 	getServiceRecordById,
 	updateServiceRecordById,
+  getServiceRecordsStatus
 };
