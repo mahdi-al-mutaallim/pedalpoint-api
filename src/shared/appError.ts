@@ -4,10 +4,11 @@ class appError extends Error {
 
 	constructor(
 		statusCode: number,
-		message: string,
+		message?: string,
 		isOperational = true,
-		stack = "",
+		stack?: string,
 	) {
+		// If message is undefined, super("") still works; fallback happens in handler
 		super(message);
 		this.statusCode = statusCode;
 		this.isOperational = isOperational;
