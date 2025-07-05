@@ -1,3 +1,4 @@
+import appError from "@shared/appError";
 import catchAsync from "@shared/catchAsync";
 import httpStatus from "@shared/httpStatus";
 import sendResponse from "@shared/sendResponse";
@@ -8,12 +9,10 @@ const createServiceRecord = catchAsync(async (req, res) => {
 	const result =
 		await ServiceRecordsServices.createServiceRecordIntoDB(serviceRecordData);
 	if (!result) {
-		return sendResponse(res, {
-			code: httpStatus.INTERNAL_SERVER_ERROR,
-			success: false,
-			message: "Failed to create service record",
-			data: null,
-		});
+		throw new appError(
+			httpStatus.INTERNAL_SERVER_ERROR,
+			"Failed to create service record",
+		);
 	}
 	return sendResponse(res, {
 		code: httpStatus.CREATED,
@@ -26,12 +25,10 @@ const createServiceRecord = catchAsync(async (req, res) => {
 const getServiceRecords = catchAsync(async (_req, res) => {
 	const result = await ServiceRecordsServices.getServiceRecordsFromDB();
 	if (!result) {
-		return sendResponse(res, {
-			code: httpStatus.INTERNAL_SERVER_ERROR,
-			success: false,
-			message: "Failed to fetch service records",
-			data: null,
-		});
+		throw new appError(
+			httpStatus.INTERNAL_SERVER_ERROR,
+			"Failed to fetch service records",
+		);
 	}
 	return sendResponse(res, {
 		code: httpStatus.OK,
@@ -44,21 +41,11 @@ const getServiceRecords = catchAsync(async (_req, res) => {
 const getServiceRecordById = catchAsync(async (req, res) => {
 	const { id } = req.params;
 	if (!id) {
-		return sendResponse(res, {
-			code: httpStatus.BAD_REQUEST,
-			success: false,
-			message: "Service record ID is required",
-			data: null,
-		});
+		throw new appError(httpStatus.BAD_REQUEST, "Service record ID is required");
 	}
 	const result = await ServiceRecordsServices.getServiceRecordByIdFromDB(id);
 	if (!result) {
-		return sendResponse(res, {
-			code: httpStatus.NOT_FOUND,
-			success: false,
-			message: "Service record not found",
-			data: null,
-		});
+		throw new appError(httpStatus.NOT_FOUND, "Service record not found");
 	}
 	return sendResponse(res, {
 		code: httpStatus.OK,
@@ -71,24 +58,17 @@ const getServiceRecordById = catchAsync(async (req, res) => {
 const updateServiceRecordById = catchAsync(async (req, res) => {
 	const { id } = req.params;
 	if (!id) {
-		return sendResponse(res, {
-			code: httpStatus.BAD_REQUEST,
-			success: false,
-			message: "Service record ID is required",
-			data: null,
-		});
+		throw new appError(httpStatus.BAD_REQUEST, "Service record ID is required");
 	}
 	const result = await ServiceRecordsServices.updateServiceRecordByIdIntoDB(
 		id,
 		req.body?.completionDate,
 	);
 	if (!result) {
-		return sendResponse(res, {
-			code: httpStatus.INTERNAL_SERVER_ERROR,
-			success: false,
-			message: "Failed to mark service as completed",
-			data: null,
-		});
+		throw new appError(
+			httpStatus.INTERNAL_SERVER_ERROR,
+			"Failed to mark service as completed",
+		);
 	}
 	return sendResponse(res, {
 		code: httpStatus.OK,
@@ -98,22 +78,21 @@ const updateServiceRecordById = catchAsync(async (req, res) => {
 	});
 });
 
-const getServiceRecordsStatus = catchAsync(async (_req, res) => {
-  const result = await ServiceRecordsServices.getServiceRecordsStatusFromDB();
-  if (!result) {
-    return sendResponse(res, {
-      code: httpStatus.INTERNAL_SERVER_ERROR,
-      success: false,
-      message: "Failed to fetch service records status",
-      data: null,
-    });
-  }
-  return sendResponse(res, {
-    code: httpStatus.OK,
-    success: true,
-    message: "Overdue or pending services fetched successfully",
-    data: result,
-  });
+const getInCompleteServiceRecords = catchAsync(async (_req, res) => {
+	const result =
+		await ServiceRecordsServices.getInCompleteServiceRecordsFromDB();
+	if (!result) {
+		throw new appError(
+			httpStatus.INTERNAL_SERVER_ERROR,
+			"Failed to fetch service records status",
+		);
+	}
+	return sendResponse(res, {
+		code: httpStatus.OK,
+		success: true,
+		message: "Overdue or pending services fetched successfully",
+		data: result,
+	});
 });
 
 export const ServiceRecordsControllers = {
@@ -121,5 +100,5 @@ export const ServiceRecordsControllers = {
 	getServiceRecords,
 	getServiceRecordById,
 	updateServiceRecordById,
-  getServiceRecordsStatus
+	getInCompleteServiceRecords,
 };

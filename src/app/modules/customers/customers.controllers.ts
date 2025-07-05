@@ -7,12 +7,10 @@ import { CustomersServices } from "./customers.services";
 const createCustomer = catchAsync(async (req, res) => {
 	const result = await CustomersServices.createCustomerIntoDB(req.body);
 	if (!result) {
-		return sendResponse(res, {
-			code: httpStatus.INTERNAL_SERVER_ERROR,
-			success: false,
-			message: "Failed to create customer",
-			data: null,
-		});
+		throw new appError(
+			httpStatus.INTERNAL_SERVER_ERROR,
+			"Failed to create customer",
+		);
 	}
 	sendResponse(res, {
 		code: httpStatus.CREATED,
@@ -25,7 +23,7 @@ const createCustomer = catchAsync(async (req, res) => {
 const getCustomers = catchAsync(async (_req, res) => {
 	const result = await CustomersServices.getCustomersFromDB();
 	if (!result || result.length === 0) {
-		throw new appError(httpStatus.NOT_FOUND, "Customer not found");
+		throw new appError(httpStatus.NOT_FOUND, "No Customers found");
 	}
 	sendResponse(res, {
 		code: httpStatus.OK,
@@ -38,21 +36,11 @@ const getCustomers = catchAsync(async (_req, res) => {
 const getCustomerById = catchAsync(async (req, res) => {
 	const { id } = req.params;
 	if (!id) {
-		return sendResponse(res, {
-			code: httpStatus.BAD_REQUEST,
-			success: false,
-			message: "Customer ID is required",
-			data: null,
-		});
+		throw new appError(httpStatus.BAD_REQUEST, "Customer ID is required");
 	}
 	const result = await CustomersServices.getCustomerByIdFromDB(id);
 	if (!result) {
-		return sendResponse(res, {
-			code: httpStatus.NOT_FOUND,
-			success: false,
-			message: "Customer not found",
-			data: null,
-		});
+		throw new appError(httpStatus.NOT_FOUND, "Customer not found");
 	}
 	sendResponse(res, {
 		code: httpStatus.OK,
@@ -65,19 +53,11 @@ const getCustomerById = catchAsync(async (req, res) => {
 const updateCustomerById = catchAsync(async (req, res) => {
 	const { id } = req.params;
 	if (!id) {
-		return sendResponse(res, {
-			code: httpStatus.BAD_REQUEST,
-			success: false,
-			message: "Customer ID is required",
-		});
+		throw new appError(httpStatus.BAD_REQUEST, "Customer ID is required");
 	}
 	const result = await CustomersServices.updateCustomerByIdIntoDB(id, req.body);
 	if (!result) {
-		return sendResponse(res, {
-			code: httpStatus.NOT_FOUND,
-			success: false,
-			message: "Customer not found",
-		});
+		throw new appError(httpStatus.NOT_FOUND, "Customer not found");
 	}
 	sendResponse(res, {
 		code: httpStatus.OK,
@@ -90,19 +70,11 @@ const updateCustomerById = catchAsync(async (req, res) => {
 const deleteCustomerById = catchAsync(async (req, res) => {
 	const { id } = req.params;
 	if (!id) {
-		return sendResponse(res, {
-			code: httpStatus.BAD_REQUEST,
-			success: false,
-			message: "Customer ID is required",
-		});
+		throw new appError(httpStatus.BAD_REQUEST, "Customer ID is required");
 	}
 	const result = await CustomersServices.deleteCustomerByIdFromDB(id);
 	if (!result) {
-		return sendResponse(res, {
-			code: httpStatus.NOT_FOUND,
-			success: false,
-			message: "Customer not found",
-		});
+		throw new appError(httpStatus.NOT_FOUND, "Customer not found");
 	}
 	sendResponse(res, {
 		code: httpStatus.OK,

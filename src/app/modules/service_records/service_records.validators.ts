@@ -22,7 +22,7 @@ const updateServiceRecordByIdValidationSchema = z.object({
 	}),
 	body: z
 		.object({
-			completionDate: z.string().datetime()
+			completionDate: z.string().datetime().optional(),
 		})
 		.optional(),
 });

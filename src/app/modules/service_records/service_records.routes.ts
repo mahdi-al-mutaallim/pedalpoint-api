@@ -11,6 +11,7 @@ router.post(
 	ServiceRecordsControllers.createServiceRecord,
 );
 router.get("/", ServiceRecordsControllers.getServiceRecords);
+router.get("/status", ServiceRecordsControllers.getInCompleteServiceRecords);
 router.get(
 	"/:id",
 	validateRequest(
@@ -25,7 +26,5 @@ router.put(
 	),
 	ServiceRecordsControllers.updateServiceRecordById,
 );
-
-router.get("/status", ServiceRecordsControllers.getServiceRecordsStatus);
 
 export const ServiceRecordsRoutes = router;

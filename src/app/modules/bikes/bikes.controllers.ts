@@ -1,3 +1,4 @@
+import appError from "@shared/appError";
 import catchAsync from "@shared/catchAsync";
 import httpStatus from "@shared/httpStatus";
 import sendResponse from "@shared/sendResponse";
@@ -7,12 +8,7 @@ const createBike = catchAsync(async (req, res) => {
 	const bikeData = req.body;
 	const result = await BikesServices.createBikeIntoDB(bikeData);
 	if (!result) {
-		return sendResponse(res, {
-			code: httpStatus.INTERNAL_SERVER_ERROR,
-			success: false,
-			message: "Failed to add bike",
-			data: null,
-		});
+		throw new appError(httpStatus.INTERNAL_SERVER_ERROR, "Failed to add bike");
 	}
 	return sendResponse(res, {
 		code: httpStatus.OK,
@@ -25,12 +21,7 @@ const createBike = catchAsync(async (req, res) => {
 const getBikes = catchAsync(async (_req, res) => {
 	const result = await BikesServices.getBikesFromDB();
 	if (!result || result.length === 0) {
-		return sendResponse(res, {
-			code: httpStatus.NOT_FOUND,
-			success: false,
-			message: "No bikes found",
-			data: null,
-		});
+		throw new appError(httpStatus.NOT_FOUND, "No Bikes found");
 	}
 	return sendResponse(res, {
 		code: httpStatus.OK,
@@ -43,21 +34,11 @@ const getBikes = catchAsync(async (_req, res) => {
 const getBikeById = catchAsync(async (req, res) => {
 	const { id } = req.params;
 	if (!id) {
-		return sendResponse(res, {
-			code: httpStatus.BAD_REQUEST,
-			success: false,
-			message: "Bike ID is required",
-			data: null,
-		});
+		throw new appError(httpStatus.BAD_REQUEST, "Bike ID is required");
 	}
 	const result = await BikesServices.getBikeByIdFromDB(id);
 	if (!result) {
-		return sendResponse(res, {
-			code: httpStatus.NOT_FOUND,
-			success: false,
-			message: "Bike not found",
-			data: null,
-		});
+		throw new appError(httpStatus.NOT_FOUND, "Bike not found");
 	}
 	sendResponse(res, {
 		code: httpStatus.OK,
@@ -67,18 +48,8 @@ const getBikeById = catchAsync(async (req, res) => {
 	});
 });
 
-const updateBikeById = catchAsync(async (req, res) => {
-	console.log(req, res);
-});
-
-const deleteBikeById = catchAsync(async (req, res) => {
-	console.log(req, res);
-});
-
 export const BikesControllers = {
 	createBike,
 	getBikes,
 	getBikeById,
-	updateBikeById,
-	deleteBikeById,
 };

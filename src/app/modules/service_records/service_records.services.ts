@@ -27,22 +27,26 @@ const updateServiceRecordByIdIntoDB = async (
 		where: { serviceId: id },
 		data: {
 			status: ServiceStatus.done,
-			...(completionDate ? { completionDate } : { completionDate: (new Date()).toISOString() }),
+			...(completionDate
+				? { completionDate }
+				: { completionDate: new Date().toISOString() }),
 		},
 	});
 };
 
-const getServiceRecordsStatusFromDB = async () => {
-  const sevenDaysAgo = new Date();
-  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-  return await prisma.serviceRecord.findMany({
-    where: {
-      status: {
-        in: [ServiceStatus.pending, ServiceStatus.in_progress]
-      },
-      serviceDate: sevenDaysAgo
-    }
-  })
+const getInCompleteServiceRecordsFromDB = async () => {
+	const sevenDaysAgo = new Date();
+	sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+	return await prisma.serviceRecord.findMany({
+		where: {
+			status: {
+				in: [ServiceStatus.pending, ServiceStatus.in_progress],
+			},
+			serviceDate: {
+				lt: sevenDaysAgo,
+			},
+		},
+	});
 };
 
 export const ServiceRecordsServices = {
@@ -50,5 +54,5 @@ export const ServiceRecordsServices = {
 	getServiceRecordsFromDB,
 	getServiceRecordByIdFromDB,
 	updateServiceRecordByIdIntoDB,
-  getServiceRecordsStatusFromDB
+	getInCompleteServiceRecordsFromDB,
 };

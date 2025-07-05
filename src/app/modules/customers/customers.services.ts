@@ -17,8 +17,20 @@ const updateCustomerByIdIntoDB = async (
 	id: string,
 	data: Partial<TCustomer>,
 ) => {
-	return await prisma.customer.update({ where: { customerId: id }, data });
+	const customer = await prisma.customer.findUnique({
+		where: { customerId: id }
+	});
+
+	if (!customer) {
+		return null;
+	}
+
+	return await prisma.customer.update({
+		where: { customerId: id },
+		data
+	});
 };
+
 
 const deleteCustomerByIdFromDB = async (id: string) => {
 	return await prisma.customer.delete({ where: { customerId: id } });
