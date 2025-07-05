@@ -1,3 +1,4 @@
+import appError from "@shared/appError";
 import catchAsync from "@shared/catchAsync";
 import httpStatus from "@shared/httpStatus";
 import sendResponse from "@shared/sendResponse";
@@ -24,12 +25,7 @@ const createCustomer = catchAsync(async (req, res) => {
 const getCustomers = catchAsync(async (_req, res) => {
 	const result = await CustomersServices.getCustomersFromDB();
 	if (!result || result.length === 0) {
-		return sendResponse(res, {
-			code: httpStatus.OK,
-			success: true,
-			message: "No customers found",
-			data: [],
-		});
+		throw new appError(httpStatus.NOT_FOUND, "Customer not found");
 	}
 	sendResponse(res, {
 		code: httpStatus.OK,
