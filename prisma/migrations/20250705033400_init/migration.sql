@@ -29,7 +29,7 @@ CREATE TABLE "service_records" (
     "bikeId" TEXT NOT NULL,
     "serviceDate" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "description" VARCHAR(255) NOT NULL,
-    "completionDate" DATE,
+    "completionDate" DATE DEFAULT CURRENT_TIMESTAMP,
     "status" "ServiceStatus" NOT NULL DEFAULT 'pending',
 
     CONSTRAINT "service_records_pkey" PRIMARY KEY ("serviceId")
