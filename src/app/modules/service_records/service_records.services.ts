@@ -27,7 +27,7 @@ const updateServiceRecordByIdIntoDB = async (
 		where: { serviceId: id },
 		data: {
 			status: ServiceStatus.done,
-			...(completionDate ? { completionDate } : {}),
+			...(completionDate ? { completionDate } : { completionDate: (new Date()).toISOString() }),
 		},
 	});
 };
@@ -41,7 +41,7 @@ const getServiceRecordsStatusFromDB = async () => {
         in: [ServiceStatus.pending, ServiceStatus.in_progress]
       },
       serviceDate: sevenDaysAgo
-    } 
+    }
   })
 };
 
