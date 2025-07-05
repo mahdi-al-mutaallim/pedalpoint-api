@@ -26,4 +26,6 @@ router.put(
 	ServiceRecordsControllers.updateServiceRecordById,
 );
 
+router.get("/status", ServiceRecordsControllers.getServiceRecordsStatus);
+
 export const ServiceRecordsRoutes = router;
