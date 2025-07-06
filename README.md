@@ -7,7 +7,7 @@ It provides endpoints to manage bike service bookings, track service history, an
 
 ## 🌐 Live Backend
 
-[https://pedalpoint-api.example.com](https://pedalpoint-api.example.com)
+[https://pedalpoint-api.vercel.app/](https://pedalpoint-api.vercel.app/)
 
 ---
 
