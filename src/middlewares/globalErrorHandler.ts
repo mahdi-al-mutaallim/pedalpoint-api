@@ -1,6 +1,6 @@
-import appError from "@shared/appError";
-import httpStatus from "@shared/httpStatus";
 import type { ErrorRequestHandler } from "express";
+import appError from "../shared/appError.js";
+import httpStatus from "../shared/httpStatus.js";
 
 // Optional helper to fallback cleanly
 const fallbackMessage = (msg: string | undefined, fallback: string) =>

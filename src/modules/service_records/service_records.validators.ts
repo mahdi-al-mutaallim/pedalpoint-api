@@ -1,5 +1,5 @@
-import { ServiceStatus } from "@generated/prisma";
 import z from "zod";
+import { ServiceStatus } from "../../shared/prisma.js";
 
 const createServiceRecordValidationSchema = z.object({
 	body: z.object({

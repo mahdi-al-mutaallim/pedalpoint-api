@@ -1,6 +1,5 @@
-import { ServiceStatus } from "@generated/prisma";
-import prisma from "@shared/prisma";
-import type { TServiceRecord } from "./service_records.types";
+import { prisma, ServiceStatus } from "../../shared/prisma.js";
+import type { TServiceRecord } from "./service_records.types.js";
 
 const createServiceRecordIntoDB = async (payload: TServiceRecord) => {
 	return await prisma.$transaction(async (tsx) => {

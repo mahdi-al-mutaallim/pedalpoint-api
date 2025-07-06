@@ -1,7 +1,7 @@
-import { BikesRoutes } from "@app/modules/bikes/bikes.routes";
-import { CustomersRoutes } from "@app/modules/customers/customers.routes";
-import { ServiceRecordsRoutes } from "@app/modules/service_records/service_records.routes";
-import createRouter, { type TRouter } from "@shared/createRouter";
+import { BikesRoutes } from "../modules/bikes/bikes.routes.js";
+import { CustomersRoutes } from "../modules/customers/customers.routes.js";
+import { ServiceRecordsRoutes } from "../modules/service_records/service_records.routes.js";
+import createRouter, { type TRouter } from "../shared/createRouter.js";
 
 const router = createRouter();
 

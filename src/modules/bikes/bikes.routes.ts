@@ -1,7 +1,7 @@
-import validateRequest from "@app/middlewares/validateRequest";
-import createRouter from "@shared/createRouter";
-import { BikesControllers } from "./bikes.controllers";
-import { BikesValidators } from "./bikes.validators";
+import validateRequest from "../../middlewares/validateRequest.js";
+import createRouter from "../../shared/createRouter.js";
+import { BikesControllers } from "./bikes.controllers.js";
+import { BikesValidators } from "./bikes.validators.js";
 
 const router = createRouter();
 

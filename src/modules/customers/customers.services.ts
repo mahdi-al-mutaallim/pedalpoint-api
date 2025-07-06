@@ -1,5 +1,5 @@
-import prisma from "@shared/prisma";
-import type { TCustomer } from "./customers.types";
+import { prisma } from "../../shared/prisma.js";
+import type { TCustomer } from "./customers.types.js";
 
 const getCustomersFromDB = async () => {
 	return await prisma.customer.findMany();
@@ -18,7 +18,7 @@ const updateCustomerByIdIntoDB = async (
 	data: Partial<TCustomer>,
 ) => {
 	const customer = await prisma.customer.findUnique({
-		where: { customerId: id }
+		where: { customerId: id },
 	});
 
 	if (!customer) {
@@ -27,10 +27,9 @@ const updateCustomerByIdIntoDB = async (
 
 	return await prisma.customer.update({
 		where: { customerId: id },
-		data
+		data,
 	});
 };
-
 
 const deleteCustomerByIdFromDB = async (id: string) => {
 	return await prisma.customer.delete({ where: { customerId: id } });

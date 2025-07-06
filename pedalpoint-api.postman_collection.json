@@ -26,14 +26,9 @@
 						"url": {
 							"raw": "http://localhost:3000/api/customers",
 							"protocol": "http",
-							"host": [
-								"localhost"
-							],
+							"host": ["localhost"],
 							"port": "3000",
-							"path": [
-								"api",
-								"customers"
-							]
+							"path": ["api", "customers"]
 						}
 					},
 					"response": []
@@ -46,14 +41,9 @@
 						"url": {
 							"raw": "http://localhost:3000/api/customers",
 							"protocol": "http",
-							"host": [
-								"localhost"
-							],
+							"host": ["localhost"],
 							"port": "3000",
-							"path": [
-								"api",
-								"customers"
-							]
+							"path": ["api", "customers"]
 						}
 					},
 					"response": []
@@ -66,9 +56,7 @@
 						"url": {
 							"raw": "http://localhost:3000/api/customers/3f1cc555-3c14-4d43-8e10-d6d9247478a4",
 							"protocol": "http",
-							"host": [
-								"localhost"
-							],
+							"host": ["localhost"],
 							"port": "3000",
 							"path": [
 								"api",
@@ -96,9 +84,7 @@
 						"url": {
 							"raw": "http://localhost:3000/api/customers/34eff4ce-9bf7-4e85-a787-57869ac6c530",
 							"protocol": "http",
-							"host": [
-								"localhost"
-							],
+							"host": ["localhost"],
 							"port": "3000",
 							"path": [
 								"api",
@@ -117,9 +103,7 @@
 						"url": {
 							"raw": "http://localhost:3000/api/customers/34eff4ce-9bf7-4e85-a787-57869ac6c530",
 							"protocol": "http",
-							"host": [
-								"localhost"
-							],
+							"host": ["localhost"],
 							"port": "3000",
 							"path": [
 								"api",
@@ -152,14 +136,9 @@
 						"url": {
 							"raw": "http://localhost:3000/api/bikes",
 							"protocol": "http",
-							"host": [
-								"localhost"
-							],
+							"host": ["localhost"],
 							"port": "3000",
-							"path": [
-								"api",
-								"bikes"
-							]
+							"path": ["api", "bikes"]
 						}
 					},
 					"response": []
@@ -172,14 +151,9 @@
 						"url": {
 							"raw": "http://localhost:3000/api/bikes",
 							"protocol": "http",
-							"host": [
-								"localhost"
-							],
+							"host": ["localhost"],
 							"port": "3000",
-							"path": [
-								"api",
-								"bikes"
-							]
+							"path": ["api", "bikes"]
 						}
 					},
 					"response": []
@@ -192,15 +166,9 @@
 						"url": {
 							"raw": "http://localhost:3000/api/bikes/32fcc806-20b8-4da3-992d-289961e7ab02",
 							"protocol": "http",
-							"host": [
-								"localhost"
-							],
+							"host": ["localhost"],
 							"port": "3000",
-							"path": [
-								"api",
-								"bikes",
-								"32fcc806-20b8-4da3-992d-289961e7ab02"
-							]
+							"path": ["api", "bikes", "32fcc806-20b8-4da3-992d-289961e7ab02"]
 						}
 					},
 					"response": []
@@ -227,14 +195,9 @@
 						"url": {
 							"raw": "http://localhost:3000/api/services",
 							"protocol": "http",
-							"host": [
-								"localhost"
-							],
+							"host": ["localhost"],
 							"port": "3000",
-							"path": [
-								"api",
-								"services"
-							]
+							"path": ["api", "services"]
 						}
 					},
 					"response": []
@@ -247,14 +210,9 @@
 						"url": {
 							"raw": "http://localhost:3000/api/services",
 							"protocol": "http",
-							"host": [
-								"localhost"
-							],
+							"host": ["localhost"],
 							"port": "3000",
-							"path": [
-								"api",
-								"services"
-							]
+							"path": ["api", "services"]
 						}
 					},
 					"response": []
@@ -267,9 +225,7 @@
 						"url": {
 							"raw": "http://localhost:3000/api/services/254307d0-f23d-4f68-8696-3f6dba3de054",
 							"protocol": "http",
-							"host": [
-								"localhost"
-							],
+							"host": ["localhost"],
 							"port": "3000",
 							"path": [
 								"api",
@@ -297,9 +253,7 @@
 						"url": {
 							"raw": "http://localhost:3000/api/services/4071f747-d159-4f42-810b-1fa6c44ffb93/complete",
 							"protocol": "http",
-							"host": [
-								"localhost"
-							],
+							"host": ["localhost"],
 							"port": "3000",
 							"path": [
 								"api",
@@ -319,15 +273,9 @@
 						"url": {
 							"raw": "http://localhost:3000/api/services/status",
 							"protocol": "http",
-							"host": [
-								"localhost"
-							],
+							"host": ["localhost"],
 							"port": "3000",
-							"path": [
-								"api",
-								"services",
-								"status"
-							]
+							"path": ["api", "services", "status"]
 						}
 					},
 					"response": []

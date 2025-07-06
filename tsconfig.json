@@ -1,32 +1,23 @@
 {
 	"compilerOptions": {
-		"target": "ES2022",
-		"module": "commonjs",
-		"lib": ["ES2022"],
+		/* Base Options: */
 		"esModuleInterop": true,
+		"skipLibCheck": true,
+		"target": "es2022",
+		"allowJs": true,
 		"resolveJsonModule": true,
-		"moduleResolution": "node10",
 		"moduleDetection": "force",
 		"isolatedModules": true,
-		"baseUrl": "./src",
-		"paths": {
-			"@app/*": ["app/*", "./app/*", "../app/*"],
-			"@generated/*": ["generated/*", "./generated/*", "../generated/*"],
-			"@helpers/*": ["helpers/*", "./helpers/*", "../helpers/*"],
-			"@shared/*": ["shared/*", "./shared/*", "../shared/*"]
-		},
-		"outDir": "build",
-		"sourceMap": true,
-		"allowJs": true,
+		/* Strictness */
 		"strict": true,
 		"noUncheckedIndexedAccess": true,
-		"noImplicitOverride": true,
-		"skipLibCheck": true,
-		"noFallthroughCasesInSwitch": true,
-		"noUnusedLocals": true,
-		"noUnusedParameters": true,
-		"noPropertyAccessFromIndexSignature": true
+		/* If transpiling with TypeScript: */
+		"moduleResolution": "NodeNext",
+		"module": "NodeNext",
+		"outDir": "dist",
+		"sourceMap": true,
+		/* If your code doesn't run in the DOM: */
+		"lib": ["es2022"]
 	},
-	"include": ["src", "generated"],
-	"exclude": ["node_modules", "build", "dist", "bun.lock"]
+	"exclude": ["node_modules", "dist", "modgen.ts", "generated"]
 }

@@ -1,5 +1,5 @@
-import prisma from "@shared/prisma";
-import type { TBike } from "./bikes.types";
+import { prisma } from "../../shared/prisma.js";
+import type { TBike } from "./bikes.types.js";
 
 const createBikeIntoDB = async (payload: TBike) => {
 	return await prisma.$transaction(async (tsx) => {

@@ -1,8 +1,8 @@
-import appError from "@shared/appError";
-import catchAsync from "@shared/catchAsync";
-import httpStatus from "@shared/httpStatus";
-import sendResponse from "@shared/sendResponse";
-import { CustomersServices } from "./customers.services";
+import appError from "../../shared/appError.js";
+import catchAsync from "../../shared/catchAsync.js";
+import httpStatus from "../../shared/httpStatus.js";
+import sendResponse from "../../shared/sendResponse.js";
+import { CustomersServices } from "./customers.services.js";
 
 const createCustomer = catchAsync(async (req, res) => {
 	const result = await CustomersServices.createCustomerIntoDB(req.body);

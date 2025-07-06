@@ -4,62 +4,67 @@ import path from "node:path";
 const moduleName = process.argv[2];
 
 if (!moduleName) {
-  console.error("Please provide a module name.");
-  process.exit(1);
+	console.error("Please provide a module name.");
+	process.exit(1);
 }
 
 // Helper functions for naming conventions
 const toPascalCase = (str: string) => {
-  return str
-    .split(/[_\s-]+/) // Split by underscore, space, or hyphen
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-    .join('');
+	return str
+		.split(/[_\s-]+/) // Split by underscore, space, or hyphen
+		.map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+		.join("");
 };
 
 const toCamelCase = (str: string) => {
-  const pascal = toPascalCase(str);
-  return pascal.charAt(0).toLowerCase() + pascal.slice(1);
+	const pascal = toPascalCase(str);
+	return pascal.charAt(0).toLowerCase() + pascal.slice(1);
 };
 
 const toSnakeCase = (str: string) => {
-  return str
-    .replace(/([A-Z])/g, '_$1') // Add underscore before capital letters
-    .replace(/^_/, '') // Remove leading underscore
-    .toLowerCase()
-    .replace(/[_\s-]+/g, '_'); // Replace multiple separators with single underscore
+	return str
+		.replace(/([A-Z])/g, "_$1") // Add underscore before capital letters
+		.replace(/^_/, "") // Remove leading underscore
+		.toLowerCase()
+		.replace(/[_\s-]+/g, "_"); // Replace multiple separators with single underscore
 };
 
 // Convert input to snake_case for consistency
 const normalizedInput = toSnakeCase(moduleName);
 
 // Determine if input is already plural
-const isPlural = normalizedInput.endsWith('s') && !normalizedInput.endsWith('ss');
+const isPlural =
+	normalizedInput.endsWith("s") && !normalizedInput.endsWith("ss");
 
 // Plural folder and files (snake_case)
-const pluralModuleName = isPlural ? normalizedInput : normalizedInput + 's';
+const pluralModuleName = isPlural ? normalizedInput : `${normalizedInput}s`;
 const ModuleName = toPascalCase(pluralModuleName);
 
 // Prisma model name (singular, camelCase)
-const prismaModelName = isPlural ? toCamelCase(normalizedInput.slice(0, -1)) : toCamelCase(normalizedInput);
+const prismaModelName = isPlural
+	? toCamelCase(normalizedInput.slice(0, -1))
+	: toCamelCase(normalizedInput);
 
 const baseDir = path.join(__dirname, "src", "app", "modules");
 const modulePath = path.join(baseDir, pluralModuleName);
 
 if (fs.existsSync(modulePath)) {
-  console.error(`Module '${pluralModuleName}' already exists.`);
-  process.exit(1);
+	console.error(`Module '${pluralModuleName}' already exists.`);
+	process.exit(1);
 }
 
 try {
-  fs.mkdirSync(modulePath, { recursive: true });
+	fs.mkdirSync(modulePath, { recursive: true });
 
-  // Convert to singular for controller function names
-  const singularModuleName = isPlural ? normalizedInput.slice(0, -1) : normalizedInput;
-  const singularName = toCamelCase(singularModuleName);
-  const SingularName = toPascalCase(singularModuleName);
+	// Convert to singular for controller function names
+	const singularModuleName = isPlural
+		? normalizedInput.slice(0, -1)
+		: normalizedInput;
+	const singularName = toCamelCase(singularModuleName);
+	const SingularName = toPascalCase(singularModuleName);
 
-  const files: Record<string, string> = {
-    [`${pluralModuleName}.controllers.ts`]: `import catchAsync from "@shared/catchAsync";
+	const files: Record<string, string> = {
+		[`${pluralModuleName}.controllers.ts`]: `import catchAsync from "@/shared/catchAsync";
 
 const create${SingularName} = catchAsync(async (req, res) => {
   console.log(req, res);
@@ -90,7 +95,7 @@ export const ${ModuleName}Controllers = {
 };
 `,
 
-    [`${pluralModuleName}.services.ts`]: `import prisma from "@shared/prisma";
+		[`${pluralModuleName}.services.ts`]: `import prisma from "@/shared/prisma";
 
 const create${SingularName}IntoDB = async () => {
   // Example: return await prisma.${prismaModelName}.create({ data: {...} });
@@ -121,7 +126,7 @@ export const ${ModuleName}Services = {
 };
 `,
 
-    [`${pluralModuleName}.routes.ts`]: `import createRouter from "@shared/createRouter";
+		[`${pluralModuleName}.routes.ts`]: `import createRouter from "@/shared/createRouter";
 import { ${ModuleName}Controllers } from "./${pluralModuleName}.controllers";
 
 const router = createRouter();
@@ -135,7 +140,7 @@ router.delete("/:id", ${ModuleName}Controllers.delete${SingularName}ById);
 export const ${ModuleName}Routes = router;
 `,
 
-    [`${pluralModuleName}.types.ts`]: `export type T${SingularName} = {
+		[`${pluralModuleName}.types.ts`]: `export type T${SingularName} = {
   // Add your type properties here
   // Example:
   // id: string;
@@ -144,7 +149,7 @@ export const ${ModuleName}Routes = router;
 };
 `,
 
-    [`${pluralModuleName}.validators.ts`]: `import z from "zod";
+		[`${pluralModuleName}.validators.ts`]: `import z from "zod";
 
 const create${SingularName}ValidationSchema = z.object({
   body: z.object({
@@ -179,16 +184,18 @@ export const ${ModuleName}Validators = {
   update${SingularName}ByIdValidationSchema,
 };
 `,
-  };
+	};
 
-  for (const fileName in files) {
-    const filePath = path.join(modulePath, fileName);
-    fs.writeFileSync(filePath, files[fileName]);
-    console.log(`Created file: ${filePath}`);
-  }
+	for (const fileName in files) {
+		const filePath = path.join(modulePath, fileName);
+		fs.writeFileSync(filePath, files[fileName] as string);
+		console.log(`Created file: ${filePath}`);
+	}
 
-  console.log(`Module '${pluralModuleName}' generated successfully in src/app/modules.`);
+	console.log(
+		`Module '${pluralModuleName}' generated successfully in src/app/modules.`,
+	);
 } catch (error) {
-  console.error("Error generating module:", error);
-  process.exit(1);
+	console.error("Error generating module:", error);
+	process.exit(1);
 }

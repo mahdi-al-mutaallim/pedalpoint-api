@@ -1,8 +1,8 @@
-import appError from "@shared/appError";
-import catchAsync from "@shared/catchAsync";
-import httpStatus from "@shared/httpStatus";
-import sendResponse from "@shared/sendResponse";
-import { ServiceRecordsServices } from "./service_records.services";
+import appError from "../../shared/appError.js";
+import catchAsync from "../../shared/catchAsync.js";
+import httpStatus from "../../shared/httpStatus.js";
+import sendResponse from "../../shared/sendResponse.js";
+import { ServiceRecordsServices } from "./service_records.services.js";
 
 const createServiceRecord = catchAsync(async (req, res) => {
 	const serviceRecordData = req.body;

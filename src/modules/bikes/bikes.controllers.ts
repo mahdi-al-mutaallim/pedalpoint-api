@@ -1,8 +1,8 @@
-import appError from "@shared/appError";
-import catchAsync from "@shared/catchAsync";
-import httpStatus from "@shared/httpStatus";
-import sendResponse from "@shared/sendResponse";
-import { BikesServices } from "./bikes.services";
+import appError from "../../shared/appError.js";
+import catchAsync from "../../shared/catchAsync.js";
+import httpStatus from "../../shared/httpStatus.js";
+import sendResponse from "../../shared/sendResponse.js";
+import { BikesServices } from "./bikes.services.js";
 
 const createBike = catchAsync(async (req, res) => {
 	const bikeData = req.body;

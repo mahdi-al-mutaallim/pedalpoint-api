@@ -1,7 +1,7 @@
-import validateRequest from "@app/middlewares/validateRequest";
-import createRouter from "@shared/createRouter";
-import { ServiceRecordsControllers } from "./service_records.controllers";
-import { ServiceRecordsValidators } from "./service_records.validators";
+import validateRequest from "../../middlewares/validateRequest.js";
+import createRouter from "../../shared/createRouter.js";
+import { ServiceRecordsControllers } from "./service_records.controllers.js";
+import { ServiceRecordsValidators } from "./service_records.validators.js";
 
 const router = createRouter();
 
